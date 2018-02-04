@@ -1,0 +1,21 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Register Your IoT Device";
+}
+
+<br />
+<br />
+Enter a friendly IoT device id for registration:
+<br />
+<br />
+<div asp-validation-summary="All"></div>
+<form method="POST">
+    <input asp-for="DeviceId" />
+    <input type="submit" />
+</form>
+<br />
+<br />
+<b>@Model.Error</b>
+<br />
+<br />

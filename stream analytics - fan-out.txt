@@ -1,0 +1,35 @@
+
+SELECT
+    [messageId] as [msgId],
+    [deviceId],
+    [temperature] as [temp],
+    [humidity],
+    [EventProcessedUtcTime] as [processedts]
+INTO
+    [all-events]
+FROM
+    [iot-events] TIMESTAMP BY [EventProcessedUtcTime]
+
+SELECT
+    [messageId] as [msgId],
+    [deviceId],
+    [temperature] as [temp],
+    [humidity],
+    [EventProcessedUtcTime] as [processedts]
+INTO
+    [event-publisher]
+FROM
+    [iot-events] TIMESTAMP BY [EventProcessedUtcTime]
+
+SELECT
+    [deviceId] as [id],
+    AVG([temperature]) as [avgTemp],
+    AVG([humidity]) as [avgHumidity],
+    System.Timestamp as [timestamp]
+INTO
+    [moving-averages]
+FROM
+    [iot-events] TIMESTAMP BY [EventProcessedUtcTime]
+GROUP BY
+    [deviceId],
+    HoppingWindow(second, 30, 15)

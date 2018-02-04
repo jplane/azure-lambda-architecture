@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceCreator", "DeviceCreator\DeviceCreator.csproj", "{2707280B-9ADB-43B9-8DFF-58A1F0C21ED5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceEventHandler", "DeviceEventHandler\DeviceEventHandler.csproj", "{1F4D023F-5642-4F2C-A661-DB06D43C8EA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2707280B-9ADB-43B9-8DFF-58A1F0C21ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2707280B-9ADB-43B9-8DFF-58A1F0C21ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2707280B-9ADB-43B9-8DFF-58A1F0C21ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2707280B-9ADB-43B9-8DFF-58A1F0C21ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F4D023F-5642-4F2C-A661-DB06D43C8EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F4D023F-5642-4F2C-A661-DB06D43C8EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F4D023F-5642-4F2C-A661-DB06D43C8EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F4D023F-5642-4F2C-A661-DB06D43C8EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E90D63B9-45BC-4017-A066-CDA96ABA0CCE}
+	EndGlobalSection
+EndGlobal

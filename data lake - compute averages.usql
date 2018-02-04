@@ -1,0 +1,37 @@
+
+REFERENCE ASSEMBLY aidmeetupaverages.[Newtonsoft.Json];
+REFERENCE ASSEMBLY aidmeetupaverages.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+@rawText = 
+    EXTRACT 
+        [RawString] string
+    FROM
+        "wasb://iot@aidmeetup/{*}.json"
+    USING 
+        Extractors.Text(delimiter:'\b', quoting : false);
+
+@rows = 
+    SELECT 
+        JsonFunctions.JsonTuple([RawString]) AS json
+    FROM 
+        @rawText;
+
+@avgs = 
+    SELECT
+        json["deviceid"] AS deviceId,
+        AVG(double.Parse(json["temp"])) AS avgTemp,
+        AVG(double.Parse(json["humidity"])) AS avgHumidity,
+        DateTime.UtcNow AS [timestamp]
+    FROM
+        @rows
+    GROUP BY
+        json["deviceid"];
+
+OUTPUT
+    @avgs
+TO
+    "/avgs.csv"
+USING
+    Outputters.Csv();
