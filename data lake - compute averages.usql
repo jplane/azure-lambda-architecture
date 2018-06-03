@@ -1,6 +1,6 @@
 
-REFERENCE ASSEMBLY aidmeetupaverages.[Newtonsoft.Json];
-REFERENCE ASSEMBLY aidmeetupaverages.[Microsoft.Analytics.Samples.Formats]; 
+REFERENCE ASSEMBLY musiccity.[Newtonsoft.Json];
+REFERENCE ASSEMBLY musiccity.[Microsoft.Analytics.Samples.Formats]; 
 
 USING Microsoft.Analytics.Samples.Formats.Json;
 
@@ -8,7 +8,7 @@ USING Microsoft.Analytics.Samples.Formats.Json;
     EXTRACT 
         [RawString] string
     FROM
-        "wasb://iot@aidmeetup/{*}.json"
+        "wasb://iot-events@mctlambdastorage/{*}.json"
     USING 
         Extractors.Text(delimiter:'\b', quoting : false);
 

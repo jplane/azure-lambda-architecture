@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "accounts_mctdata_defaultDataLakeStoreAccount": {
+            "value": null
+        },
+        "accounts_mctdata_dataLakeStoreAccounts": {
+            "value": null
+        },
+        "databaseAccounts_mct_lambda_name": {
+            "value": null
+        },
+        "storageAccounts_mctlambdastorage_accessKey": {
+            "value": null
+        },
+        "IotHubs_mct_lambda_hub_name": {
+            "value": null
+        },
+        "topics_mct_iot_events_name": {
+            "value": null
+        },
+        "accounts_mctdata_name": {
+            "value": null
+        },
+        "accounts_mctdataadls_name": {
+            "value": null
+        },
+        "serverfarms_SouthCentralUSPlan_name": {
+            "value": null
+        },
+        "sites_mct_lambda_eventpublisher_name": {
+            "value": null
+        },
+        "databaseAccounts_mct_lambda_name_1": {
+            "value": null
+        },
+        "storageAccounts_mctlambdastorage_name": {
+            "value": null
+        },
+        "config_web_name": {
+            "value": null
+        },
+        "streamingjobs_mct_event_aggregator_name": {
+            "value": null
+        },
+        "storageAccounts_mctlambdastorage_name_1": {
+            "value": null
+        },
+        "dataLakeStoreAccounts_mctdataadls_name": {
+            "value": null
+        },
+        "inputs_iot_events_name": {
+            "value": null
+        },
+        "outputs_all_events_name": {
+            "value": null
+        },
+        "outputs_event_publisher_name": {
+            "value": null
+        },
+        "outputs_moving_averages_name": {
+            "value": null
+        },
+        "hostNameBindings_mct_lambda_eventpublisher.azurewebsites.net_name": {
+            "value": null
+        }
+    }
+}

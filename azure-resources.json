@@ -1,0 +1,638 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "accounts_mctdata_defaultDataLakeStoreAccount": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "accounts_mctdata_dataLakeStoreAccounts": {
+            "defaultValue": null,
+            "type": "Array"
+        },
+        "databaseAccounts_mct_lambda_name": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "storageAccounts_mctlambdastorage_accessKey": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "IotHubs_mct_lambda_hub_name": {
+            "defaultValue": "mct-lambda-hub",
+            "type": "String"
+        },
+        "topics_mct_iot_events_name": {
+            "defaultValue": "mct-iot-events",
+            "type": "String"
+        },
+        "accounts_mctdata_name": {
+            "defaultValue": "mctdata",
+            "type": "String"
+        },
+        "accounts_mctdataadls_name": {
+            "defaultValue": "mctdataadls",
+            "type": "String"
+        },
+        "serverfarms_SouthCentralUSPlan_name": {
+            "defaultValue": "SouthCentralUSPlan",
+            "type": "String"
+        },
+        "sites_mct_lambda_eventpublisher_name": {
+            "defaultValue": "mct-lambda-eventpublisher",
+            "type": "String"
+        },
+        "databaseAccounts_mct_lambda_name_1": {
+            "defaultValue": "mct-lambda",
+            "type": "String"
+        },
+        "storageAccounts_mctlambdastorage_name": {
+            "defaultValue": "mctlambdastorage",
+            "type": "String"
+        },
+        "config_web_name": {
+            "defaultValue": "web",
+            "type": "String"
+        },
+        "streamingjobs_mct_event_aggregator_name": {
+            "defaultValue": "mct-event-aggregator",
+            "type": "String"
+        },
+        "storageAccounts_mctlambdastorage_name_1": {
+            "defaultValue": "mctlambdastorage",
+            "type": "String"
+        },
+        "dataLakeStoreAccounts_mctdataadls_name": {
+            "defaultValue": "mctdataadls",
+            "type": "String"
+        },
+        "inputs_iot_events_name": {
+            "defaultValue": "iot-events",
+            "type": "String"
+        },
+        "outputs_all_events_name": {
+            "defaultValue": "all-events",
+            "type": "String"
+        },
+        "outputs_event_publisher_name": {
+            "defaultValue": "event-publisher",
+            "type": "String"
+        },
+        "outputs_moving_averages_name": {
+            "defaultValue": "moving-averages",
+            "type": "String"
+        },
+        "hostNameBindings_mct_lambda_eventpublisher.azurewebsites.net_name": {
+            "defaultValue": "mct-lambda-eventpublisher.azurewebsites.net",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.DataLakeAnalytics/accounts/mctdata'.",
+            "type": "Microsoft.DataLakeAnalytics/accounts",
+            "name": "[parameters('accounts_mctdata_name')]",
+            "apiVersion": "2016-11-01",
+            "location": "centralus",
+            "scale": null,
+            "properties": {
+                "defaultDataLakeStoreAccount": "[parameters('accounts_mctdata_defaultDataLakeStoreAccount')]",
+                "dataLakeStoreAccounts": "[parameters('accounts_mctdata_dataLakeStoreAccounts')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.DataLakeStore/accounts/mctdataadls'.",
+            "type": "Microsoft.DataLakeStore/accounts",
+            "name": "[parameters('accounts_mctdataadls_name')]",
+            "apiVersion": "2016-11-01",
+            "location": "centralus",
+            "scale": null,
+            "properties": {},
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.Devices/IotHubs/mct-lambda-hub'.",
+            "type": "Microsoft.Devices/IotHubs",
+            "sku": {
+                "name": "B1",
+                "tier": "Basic",
+                "capacity": 1
+            },
+            "name": "[parameters('IotHubs_mct_lambda_hub_name')]",
+            "apiVersion": "2018-01-22",
+            "location": "southcentralus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "operationsMonitoringProperties": {
+                    "events": {
+                        "None": "None",
+                        "Connections": "None",
+                        "DeviceTelemetry": "None",
+                        "C2DCommands": "None",
+                        "DeviceIdentityOperations": "None",
+                        "FileUploadOperations": "None",
+                        "Routes": "None"
+                    }
+                },
+                "ipFilterRules": [],
+                "eventHubEndpoints": {
+                    "events": {
+                        "retentionTimeInDays": 1,
+                        "partitionCount": 4,
+                        "partitionIds": [
+                            "0",
+                            "1",
+                            "2",
+                            "3"
+                        ],
+                        "path": "[parameters('IotHubs_mct_lambda_hub_name')]",
+                        "endpoint": "sb://iothub-ns-mct-lambda-489075-d03f53ff3b.servicebus.windows.net/"
+                    },
+                    "operationsMonitoringEvents": {
+                        "retentionTimeInDays": 1,
+                        "partitionCount": 4,
+                        "partitionIds": [
+                            "0",
+                            "1",
+                            "2",
+                            "3"
+                        ],
+                        "path": "[concat(parameters('IotHubs_mct_lambda_hub_name'),'-operationmonitoring')]",
+                        "endpoint": "sb://iothub-ns-mct-lambda-489075-d03f53ff3b.servicebus.windows.net/"
+                    }
+                },
+                "routing": {
+                    "endpoints": {
+                        "serviceBusQueues": [],
+                        "serviceBusTopics": [],
+                        "eventHubs": []
+                    },
+                    "routes": [],
+                    "fallbackRoute": {
+                        "name": "$fallback",
+                        "source": "DeviceMessages",
+                        "condition": "true",
+                        "endpointNames": [
+                            "events"
+                        ],
+                        "isEnabled": true
+                    }
+                },
+                "storageEndpoints": {
+                    "$default": {
+                        "sasTtlAsIso8601": "PT1H",
+                        "connectionString": "",
+                        "containerName": ""
+                    }
+                },
+                "enableFileUploadNotifications": false,
+                "cloudToDevice": {
+                    "maxDeliveryCount": 10,
+                    "defaultTtlAsIso8601": "PT1H",
+                    "feedback": {
+                        "lockDurationAsIso8601": "PT1M",
+                        "ttlAsIso8601": "PT1H",
+                        "maxDeliveryCount": 10
+                    }
+                },
+                "features": "None"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.DocumentDB/databaseAccounts/mct-lambda'.",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "GlobalDocumentDB",
+            "name": "[parameters('databaseAccounts_mct_lambda_name_1')]",
+            "apiVersion": "2015-04-08",
+            "location": "South Central US",
+            "tags": {
+                "defaultExperience": "DocumentDB"
+            },
+            "scale": null,
+            "properties": {
+                "databaseAccountOfferType": "Standard",
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "Session",
+                    "maxIntervalInSeconds": 5,
+                    "maxStalenessPrefix": 100
+                },
+                "name": "[parameters('databaseAccounts_mct_lambda_name')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.EventGrid/topics/mct-iot-events'.",
+            "type": "Microsoft.EventGrid/topics",
+            "name": "[parameters('topics_mct_iot_events_name')]",
+            "apiVersion": "2018-01-01",
+            "location": "centralus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "endpoint": "[concat('https://', parameters('topics_mct_iot_events_name'),'.centralus-1.eventgrid.azure.net/api/events')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.Storage/storageAccounts/mctlambdastorage'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_mctlambdastorage_name')]",
+            "apiVersion": "2017-10-01",
+            "location": "southcentralus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": false,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.StreamAnalytics/streamingjobs/mct-event-aggregator'.",
+            "type": "Microsoft.StreamAnalytics/streamingjobs",
+            "name": "[parameters('streamingjobs_mct_event_aggregator_name')]",
+            "apiVersion": "2016-03-01",
+            "location": "South Central US",
+            "scale": null,
+            "properties": {
+                "sku": {
+                    "name": "Standard"
+                },
+                "outputStartMode": "JobStartTime",
+                "outputStartTime": "2018-06-02T15:38:06.3Z",
+                "eventsOutOfOrderPolicy": "Adjust",
+                "outputErrorPolicy": "Stop",
+                "eventsOutOfOrderMaxDelayInSeconds": 0,
+                "eventsLateArrivalMaxDelayInSeconds": 5,
+                "dataLocale": "en-US",
+                "compatibilityLevel": "1.0"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.Web/serverfarms/SouthCentralUSPlan'.",
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "name": "[parameters('serverfarms_SouthCentralUSPlan_name')]",
+            "apiVersion": "2016-09-01",
+            "location": "South Central US",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('serverfarms_SouthCentralUSPlan_name')]",
+                "workerTierName": null,
+                "adminSiteName": null,
+                "hostingEnvironmentProfile": null,
+                "perSiteScaling": false,
+                "reserved": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.Web/sites/mct-lambda-eventpublisher'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[parameters('sites_mct_lambda_eventpublisher_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "South Central US",
+            "scale": null,
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_mct_lambda_eventpublisher_name'),'.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('sites_mct_lambda_eventpublisher_name'),'.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_SouthCentralUSPlan_name'))]",
+                "reserved": false,
+                "siteConfig": null,
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_SouthCentralUSPlan_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.DataLakeAnalytics/accounts/mctdata/dataLakeStoreAccounts/mctdataadls'.",
+            "type": "Microsoft.DataLakeAnalytics/accounts/dataLakeStoreAccounts",
+            "name": "[concat(parameters('accounts_mctdata_name'), '/', parameters('dataLakeStoreAccounts_mctdataadls_name'))]",
+            "apiVersion": "2016-11-01",
+            "scale": null,
+            "properties": {},
+            "dependsOn": [
+                "[resourceId('Microsoft.DataLakeAnalytics/accounts', parameters('accounts_mctdata_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.DataLakeAnalytics/accounts/mctdata/storageAccounts/mctlambdastorage'.",
+            "type": "Microsoft.DataLakeAnalytics/accounts/storageAccounts",
+            "name": "[concat(parameters('accounts_mctdata_name'), '/', parameters('storageAccounts_mctlambdastorage_name_1'))]",
+            "apiVersion": "2016-11-01",
+            "scale": null,
+            "properties": {
+                "properties": {
+                    "accessKey": "[parameters('storageAccounts_mctlambdastorage_accessKey')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DataLakeAnalytics/accounts', parameters('accounts_mctdata_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.StreamAnalytics/streamingjobs/mct-event-aggregator/inputs/iot-events'.",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/inputs",
+            "name": "[concat(parameters('streamingjobs_mct_event_aggregator_name'), '/', parameters('inputs_iot_events_name'))]",
+            "apiVersion": "2016-03-01",
+            "scale": null,
+            "properties": {
+                "type": "Stream",
+                "datasource": {
+                    "type": "Microsoft.Devices/IotHubs",
+                    "properties": {
+                        "iotHubNamespace": "mct-lambda-hub",
+                        "sharedAccessPolicyName": "iothubowner",
+                        "endpoint": "messages/events",
+                        "consumerGroupName": "$Default"
+                    }
+                },
+                "compression": {
+                    "type": "None"
+                },
+                "serialization": {
+                    "type": "Json",
+                    "properties": {
+                        "encoding": "UTF8"
+                    }
+                },
+                "etag": "f49c1def-5246-4337-923d-c4007bc9e791"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.StreamAnalytics/streamingjobs', parameters('streamingjobs_mct_event_aggregator_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.StreamAnalytics/streamingjobs/mct-event-aggregator/outputs/all-events'.",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+            "name": "[concat(parameters('streamingjobs_mct_event_aggregator_name'), '/', parameters('outputs_all_events_name'))]",
+            "apiVersion": "2016-03-01",
+            "scale": null,
+            "properties": {
+                "datasource": {
+                    "type": "Microsoft.Storage/Blob",
+                    "properties": {
+                        "blobPathPrefix": "",
+                        "storageAccounts": [
+                            {
+                                "accountName": "mctlambdastorage"
+                            }
+                        ],
+                        "container": "iot-events",
+                        "pathPattern": "",
+                        "dateFormat": "yyyy/MM/dd",
+                        "timeFormat": "HH"
+                    }
+                },
+                "serialization": {
+                    "type": "Json",
+                    "properties": {
+                        "encoding": "UTF8",
+                        "format": "LineSeparated"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.StreamAnalytics/streamingjobs', parameters('streamingjobs_mct_event_aggregator_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.StreamAnalytics/streamingjobs/mct-event-aggregator/outputs/event-publisher'.",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+            "name": "[concat(parameters('streamingjobs_mct_event_aggregator_name'), '/', parameters('outputs_event_publisher_name'))]",
+            "apiVersion": "2016-03-01",
+            "scale": null,
+            "properties": {
+                "datasource": {
+                    "type": "Microsoft.AzureFunction",
+                    "properties": {
+                        "functionAppName": "mct-lambda-eventpublisher",
+                        "functionName": "EventPublisher",
+                        "apiKey": null
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.StreamAnalytics/streamingjobs', parameters('streamingjobs_mct_event_aggregator_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.StreamAnalytics/streamingjobs/mct-event-aggregator/outputs/moving-averages'.",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+            "name": "[concat(parameters('streamingjobs_mct_event_aggregator_name'), '/', parameters('outputs_moving_averages_name'))]",
+            "apiVersion": "2016-03-01",
+            "scale": null,
+            "properties": {
+                "datasource": {
+                    "type": "Microsoft.Storage/DocumentDB",
+                    "properties": {
+                        "accountId": "mct-lambda",
+                        "accountKey": null,
+                        "database": "iot-data",
+                        "collectionNamePattern": "[parameters('outputs_moving_averages_name')]",
+                        "documentId": "id"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.StreamAnalytics/streamingjobs', parameters('streamingjobs_mct_event_aggregator_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.Web/sites/mct-lambda-eventpublisher/config/web'.",
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(parameters('sites_mct_lambda_eventpublisher_name'), '/', parameters('config_web_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "South Central US",
+            "scale": null,
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "pythonVersion": "",
+                "nodeVersion": "",
+                "linuxFxVersion": "",
+                "windowsFxVersion": null,
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": null,
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$mct-lambda-eventpublisher",
+                "publishingPassword": null,
+                "appSettings": null,
+                "metadata": null,
+                "connectionStrings": null,
+                "machineKey": null,
+                "handlerMappings": null,
+                "documentRoot": null,
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "javaVersion": null,
+                "javaContainer": null,
+                "javaContainerVersion": null,
+                "appCommandLine": "",
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "runtimeADUser": null,
+                "runtimeADUserPassword": null,
+                "loadBalancing": "LeastRequests",
+                "routingRules": [],
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "limits": null,
+                "autoHealEnabled": false,
+                "autoHealRules": null,
+                "tracingOptions": null,
+                "vnetName": "",
+                "siteAuthEnabled": false,
+                "siteAuthSettings": {
+                    "enabled": null,
+                    "unauthenticatedClientAction": null,
+                    "tokenStoreEnabled": null,
+                    "allowedExternalRedirectUrls": null,
+                    "defaultProvider": null,
+                    "clientId": null,
+                    "clientSecret": null,
+                    "issuer": null,
+                    "allowedAudiences": null,
+                    "additionalLoginParams": null,
+                    "isAadAutoProvisioned": false,
+                    "googleClientId": null,
+                    "googleClientSecret": null,
+                    "googleOAuthScopes": null,
+                    "facebookAppId": null,
+                    "facebookAppSecret": null,
+                    "facebookOAuthScopes": null,
+                    "twitterConsumerKey": null,
+                    "twitterConsumerSecret": null,
+                    "microsoftAccountClientId": null,
+                    "microsoftAccountClientSecret": null,
+                    "microsoftAccountOAuthScopes": null
+                },
+                "cors": {
+                    "allowedOrigins": [
+                        "https://functions.azure.com",
+                        "https://functions-staging.azure.com",
+                        "https://functions-next.azure.com"
+                    ]
+                },
+                "push": null,
+                "apiDefinition": null,
+                "autoSwapSlotName": null,
+                "localMySqlEnabled": false,
+                "managedServiceIdentityId": null,
+                "xManagedServiceIdentityId": null,
+                "ipSecurityRestrictions": null,
+                "http20Enabled": false,
+                "minTlsVersion": "1.0",
+                "ftpsState": "AllAllowed"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_mct_lambda_eventpublisher_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f481a28d-8509-42c9-aeac-e718d78081f5/resourceGroups/mct-lambda-architecture/providers/Microsoft.Web/sites/mct-lambda-eventpublisher/hostNameBindings/mct-lambda-eventpublisher.azurewebsites.net'.",
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('sites_mct_lambda_eventpublisher_name'), '/', parameters('hostNameBindings_mct_lambda_eventpublisher.azurewebsites.net_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "South Central US",
+            "scale": null,
+            "properties": {
+                "siteName": "mct-lambda-eventpublisher",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_mct_lambda_eventpublisher_name'))]"
+            ]
+        }
+    ]
+}
